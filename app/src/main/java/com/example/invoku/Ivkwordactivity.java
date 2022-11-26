@@ -94,8 +94,8 @@ public class Ivkwordactivity extends AppCompatActivity implements LoaderManager.
                     mFirstWord_in = cursor.getString(1);
                     mSecondWord_in = cursor.getString(2);
                     transkript = cursor.getString(4);
-                    mFirstWordEditText.setText(mFirstWord_in);
-                    mSecondWordEditText.setText(mSecondWord_in);
+                    mFirstWordEditText.setText(mFirstWord_in.trim());
+                    mSecondWordEditText.setText(mSecondWord_in.trim());
                 }
                 builder.setCancelable(true).setNegativeButton("отмена", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface param1DialogInterface, int param1Int) {
@@ -150,9 +150,9 @@ public class Ivkwordactivity extends AppCompatActivity implements LoaderManager.
                 mFirstWord_in = cursor.getString(1);
                 mSecondWord_in = cursor.getString(2);
                 transkript = cursor.getString(4);
-                mFirstWordEditText.setText(mFirstWord_in);
-                mSecondWordEditText.setText(mSecondWord_in);
-                mTrans.setText(transkript);
+                mFirstWordEditText.setText(mFirstWord_in.trim());
+                mSecondWordEditText.setText(mSecondWord_in.trim());
+                mTrans.setText(transkript.trim());
             }
             builder.setCancelable(true).setNegativeButton("отмена", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface param1DialogInterface, int param1Int) {
@@ -282,7 +282,7 @@ public class Ivkwordactivity extends AppCompatActivity implements LoaderManager.
                             mSecondWord_in = mSecondWordEditText.getText().toString();
                             if (!mFirstWord_in.equals("")) {
                                 if (!mSecondWord_in.equals("")) {
-                                    dbSQL.createNewTable(mFirstWord_in, mSecondWord_in, num_in, "");
+                                    dbSQL.createNewTable(mFirstWord_in.trim(), mSecondWord_in.trim(), num_in, "");
                                     getSupportLoaderManager().getLoader(0).forceLoad();
                                     alertDialog.cancel();
                                     return;
@@ -329,7 +329,7 @@ public class Ivkwordactivity extends AppCompatActivity implements LoaderManager.
                             transkript = mTrans.getText().toString();
                             if (!mFirstWord_in.equals("")) {
                                 if (!mSecondWord_in.equals("")) {
-                                    dbSQL.createNewTable(mFirstWord_in, mSecondWord_in, num_in, transkript);
+                                    dbSQL.createNewTable(mFirstWord_in.trim(), mSecondWord_in.trim(), num_in, transkript.trim());
                                     getSupportLoaderManager().getLoader(0).forceLoad();
                                     alertDialog.cancel();
                                     return;
@@ -369,8 +369,8 @@ public class Ivkwordactivity extends AppCompatActivity implements LoaderManager.
                         Ivkwordactivity.mFirstWord_in = cursor.getString(1);
                         Ivkwordactivity.mSecondWord_in = cursor.getString(2);
                         Ivkwordactivity.transkript = cursor.getString(4);
-                        mFirstWordEditText.setText(Ivkwordactivity.mFirstWord_in);
-                        mSecondWordEditText.setText(Ivkwordactivity.mSecondWord_in);
+                        mFirstWordEditText.setText(Ivkwordactivity.mFirstWord_in.trim());
+                        mSecondWordEditText.setText(Ivkwordactivity.mSecondWord_in.trim());
                     }
                     builder.setCancelable(true).setNegativeButton("отмена", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface param2DialogInterface, int param2Int) {
@@ -389,7 +389,7 @@ public class Ivkwordactivity extends AppCompatActivity implements LoaderManager.
                             Ivkwordactivity.mSecondWord_in = mSecondWordEditText.getText().toString();
                             if (!Ivkwordactivity.mFirstWord_in.equals("")) {
                                 if (!Ivkwordactivity.mSecondWord_in.equals("")) {
-                                    Ivkwordactivity.this.dbSQL.updateTable(Ivkwordactivity.this.sql_id, Ivkwordactivity.mFirstWord_in.trim(), Ivkwordactivity.mSecondWord_in.trim(), Ivkwordactivity.num_in, transkript);
+                                    Ivkwordactivity.this.dbSQL.updateTable(Ivkwordactivity.this.sql_id, Ivkwordactivity.mFirstWord_in.trim(), Ivkwordactivity.mSecondWord_in.trim(), Ivkwordactivity.num_in, transkript.trim());
                                     Ivkwordactivity.
                                             this.getSupportLoaderManager().getLoader(0).forceLoad();
                                     alertDialog.cancel();
@@ -422,9 +422,9 @@ public class Ivkwordactivity extends AppCompatActivity implements LoaderManager.
                         Ivkwordactivity.mFirstWord_in = cursor.getString(1);
                         Ivkwordactivity.mSecondWord_in = cursor.getString(2);
                         Ivkwordactivity.transkript = cursor.getString(4);
-                        mFirstWordEditText.setText(Ivkwordactivity.mFirstWord_in);
-                        mSecondWordEditText.setText(Ivkwordactivity.mSecondWord_in);
-                        mTrans.setText(Ivkwordactivity.transkript);
+                        mFirstWordEditText.setText(Ivkwordactivity.mFirstWord_in.trim());
+                        mSecondWordEditText.setText(Ivkwordactivity.mSecondWord_in.trim());
+                        mTrans.setText(Ivkwordactivity.transkript.trim());
                     }
                     builder.setCancelable(true).setNegativeButton("отмена", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface param2DialogInterface, int param2Int) {

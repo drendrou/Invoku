@@ -87,7 +87,7 @@ public class IvkMainActivity extends AppCompatActivity implements LoaderManager.
                 cursor.moveToFirst();
                 num_id = cursor.getInt(0);
                 languagename_in = cursor.getString(1);
-                LanguageNameEditText.setText(languagename_in);
+                LanguageNameEditText.setText(languagename_in.trim());
                 LanguageNameEditText.setSelection(LanguageNameEditText.getText().length());
             }
             builder.setCancelable(true).setNegativeButton("отмена", new DialogInterface.OnClickListener() {
@@ -105,7 +105,7 @@ public class IvkMainActivity extends AppCompatActivity implements LoaderManager.
                 public void onClick(View param1View) {
                     languagename_in = LanguageNameEditText.getText().toString();
                     if (!languagename_in.equals("")) {
-                        dbSQLM.updateTable(num_id, languagename_in);
+                        dbSQLM.updateTable(num_id, languagename_in.trim());
                         getSupportLoaderManager().getLoader(0).forceLoad();
                         alertDialog.cancel();
 
@@ -186,7 +186,7 @@ public class IvkMainActivity extends AppCompatActivity implements LoaderManager.
                         }
 
                         if (!languagename_in.equals("")) {
-                            dbSQLM.createNewTable(languagename_in);
+                            dbSQLM.createNewTable(languagename_in.trim());
 
                             getSupportLoaderManager().getLoader(0).forceLoad();
                             alertDialog.cancel();
