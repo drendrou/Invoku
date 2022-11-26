@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="aboutprogramm">Об институте</string>
+    <string name="aboutprogrammwithbutton">Кнопка снизу экрана используется для добавления новых языков и слов.Если вы захотите удалить или отредактировать язык или слово нажмите на него и немного подержите, после чего выберите нужное действие. Для начала тестирования выберите нужный язык и нажмите кнопку справа-снизу. Вы также можете выбрать необходимое количество слов, а также наличие таймера и его длительность в настройках(кнопка шестеренки справа-сверху).</string>
+    <string name="app_name">Invoku</string>
+    <string name="back">назад</string>
+    <string name="button">Кнопка</string>
+    <string name="change_record">изменить</string>
+    <string name="delete">Вы уверены?</string>
+    <string name="delete_record">удалить</string>
+    <string name="firstword">Первое слово</string>
+    <string name="info">О программе</string>
+    <string name="invent">Инвентировать тестирование</string>
+    <string name="ivkinfo">Об институте</string>
+    <string name="languagename">Название языка</string>
+    <string name="next">дальше</string>
+    <string name="numberofword">Введите количество слов</string>
+    <string name="opem">открыть</string>
+    <string name="secondword">Второе слово</string>
+    <string name="setting">настройки</string>
+    <string name="timeron">Включить таймер</string>
+    <string name="timerset">Установить время таймера</string>
+    <string name="trans">Добавить транскрипции</string>
+    <string name="transoutput">Транскрипция (опционально)</string>
+    <string name="youneed">Внимание! Для корректного использования данной программы, вам необходимо установить клавиатуру языка, который вы намерены изучать. Для поиска и установки необходимой клавиатуры рекомендуется использовать Google Play market. Также некоторые телефоны позволяют добавлять новые языки из меню настроек. Если вы не уверены, что ваш телефон такое поддерживает, используйте Google Play.</string>
+</resources>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@id/setting_open"
+        android:icon="@mipmap/ivkoption"
+        android:orderInCategory="100"
+        android:title="@string/setting"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@id/info_open"
+        android:icon="@mipmap/ivkinfo"
+        android:orderInCategory="10"
+        android:title="@string/info"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@id/ivk_open"
+        android:layout_width="wrap_content"
+        android:icon="@mipmap/ivkivk"
+        android:orderInCategory="5"
+        android:title="@string/ivkinfo"
+        app:showAsAction="ifRoom" />
+</menu>

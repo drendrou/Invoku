@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <item name="mTestFirstWord" type="id"></item>
+    <item name="mTestSecondWord" type="id"></item>
+    <item name="Result" type="id"></item>
+    <item name="timer" type="id"></item>
+    <item name="ListViewLanguage" type="id"></item>
+    <item name="floatingActionButtonMain" type="id"></item>
+    <item name="infoyouneed" type="id"></item>
+    <item name="infoaboutbutton" type="id"></item>
+    <item name="textViewdelete" type="id"></item>
+    <item name="SecondWord" type="id"></item>
+    <item name="language_name" type="id"></item>
+    <item name="trans" type="id"></item>
+    <item name="outputfirst" type="id"></item>
+    <item name="outputsecond" type="id"></item>
+    <item name="outputmaintext" type="id"></item>
+    <item name="outputtrans1" type="id"></item>
+    <item name="outputtrans2" type="id"></item>
+    <item name="outputtrans3" type="id"></item>
+    <item name="outputresultfirst" type="id"></item>
+    <item name="outputresultsecond" type="id"></item>
+    <item name="outputresultthird" type="id"></item>
+    <item name="outputresultfour" type="id"></item>
+    <item name="mSecondActivityFirstWord" type="id"></item>
+    <item name="mSecondActivitySecondWord" type="id"></item>
+    <item name="SecondActivityResult" type="id"></item>
+    <item name="SecondActivitytimer" type="id"></item>
+    <item name="mDialogFirstWord" type="id"></item>
+    <item name="mDialogSecondWord" type="id"></item>
+    <item name="mDialogFirstWordTrans" type="id"></item>
+    <item name="mDialogSecondWordTrans" type="id"></item>
+    <item name="setting_open" type="id"></item>
+    <item name="info_open" type="id"></item>
+    <item name="ivk_open" type="id"></item>
+    <item name="mWordActivityFab" type="id"></item>
+    <item name="mWordActivityFabSA" type="id"></item>
+    <item name="mWordActivityFabBack" type="id"></item>
+    <item name="floatingActionButtonBack" type="id"></item>
+    <item name="ListViewResult" type="id"></item>
+
+</resources>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <EditTextPreference
+        android:defaultValue="5"
+        android:dialogTitle="@string/numberofword"
+        android:inputType="number"
+        android:key="numberofwordCod"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:summary="Введите количество слов в тестировании"
+        android:title="Количество слов" />
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="timeron"
+        android:title="@string/timeron" />
+    <EditTextPreference
+        android:defaultValue="10"
+        android:dependency="timeron"
+        android:inputType="number"
+        android:key="timerset"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:summary="@string/timerset" />
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="invent"
+        android:title="@string/invent" />
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="trans"
+        android:title="@string/trans" />
+</PreferenceScreen>
