@@ -1,5 +1,5 @@
 package com.example.invoku;
-
+//Вкладка со словами
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -32,6 +32,7 @@ import androidx.loader.content.Loader;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class Ivkwordactivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
+    //Объявление переменных
     private static final int change = 1;
 
     private static final int delete = 2;
@@ -78,9 +79,12 @@ public class Ivkwordactivity extends AppCompatActivity implements LoaderManager.
 
     public String timercheckstring;
 
+    //Меню вызываемое при долгом нажатии на одно из слов
     public boolean onContextItemSelected(MenuItem paramMenuItem) {
+        //Редактирование слов в зависимости от того, включена ли пользователем функция транскрипции
         if (paramMenuItem.getItemId() == change) {
             if (trans == false) {
+                //Редактирование при выключенной функции транскрипции
                 final AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) paramMenuItem.getMenuInfo();
                 View view = LayoutInflater.from(this.mDialogMain).inflate(R.layout.ivkdialog, null);
                 AlertDialog.Builder builder = new AlertDialog.Builder(this.mDialogMain);
@@ -98,18 +102,18 @@ public class Ivkwordactivity extends AppCompatActivity implements LoaderManager.
                     mSecondWordEditText.setText(mSecondWord_in.trim());
                 }
                 builder.setCancelable(true).setNegativeButton("отмена", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface param1DialogInterface, int param1Int) {
-                        param1DialogInterface.cancel();
+                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                        paramDialogInterface.cancel();
                     }
                 }).setPositiveButton("ок", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface param1DialogInterface, int param1Int) {
+                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
                     }
                 });
                 final AlertDialog alertDialog = builder.create();
                 alertDialog.show();
                 Button button = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
                 View.OnClickListener onClickListener = new View.OnClickListener() {
-                    public void onClick(View param1View) {
+                    public void onClick(View paramView) {
                         Ivkwordactivity.mFirstWord_in = mFirstWordEditText.getText().toString();
                         Ivkwordactivity.mSecondWord_in = mSecondWordEditText.getText().toString();
                         if (!Ivkwordactivity.mFirstWord_in.equals("")) {
@@ -136,6 +140,7 @@ public class Ivkwordactivity extends AppCompatActivity implements LoaderManager.
                 button.setOnClickListener(onClickListener);
             }
             else {
+                //Редактирование при включенной функции транскрипции
             final AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) paramMenuItem.getMenuInfo();
             View view = LayoutInflater.from(this.mDialogMain).inflate(R.layout.ivkdialogtrans, null);
             AlertDialog.Builder builder = new AlertDialog.Builder(this.mDialogMain);
@@ -155,18 +160,18 @@ public class Ivkwordactivity extends AppCompatActivity implements LoaderManager.
                 mTrans.setText(transkript.trim());
             }
             builder.setCancelable(true).setNegativeButton("отмена", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface param1DialogInterface, int param1Int) {
-                    param1DialogInterface.cancel();
+                public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                    paramDialogInterface.cancel();
                 }
             }).setPositiveButton("ок", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface param1DialogInterface, int param1Int) {
+                public void onClick(DialogInterface paramDialogInterface, int paramInt) {
                 }
             });
             final AlertDialog alertDialog = builder.create();
             alertDialog.show();
             Button button = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
             View.OnClickListener onClickListener = new View.OnClickListener() {
-                public void onClick(View param1View) {
+                public void onClick(View paramView) {
                     Ivkwordactivity.mFirstWord_in = mFirstWordEditText.getText().toString();
                     Ivkwordactivity.mSecondWord_in = mSecondWordEditText.getText().toString();
                     Ivkwordactivity.transkript = mTrans.getText().toString();
@@ -196,16 +201,17 @@ public class Ivkwordactivity extends AppCompatActivity implements LoaderManager.
             return true;
         }
         if (paramMenuItem.getItemId() == delete) {
+            //Удаление слова. Слово, его перевод и транскрипция удаляются полностью из памяти, без возможности восстановления
             final AdapterView.AdapterContextMenuInfo acm2 = (AdapterView.AdapterContextMenuInfo) paramMenuItem.getMenuInfo();
             View view = LayoutInflater.from(mDialogMain).inflate(R.layout.ivkdelete, null);
             AlertDialog.Builder builder = new AlertDialog.Builder(mDialogMain);
             builder.setView(view);
             builder.setCancelable(true).setNegativeButton("отмена", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface param1DialogInterface, int param1Int) {
-                    param1DialogInterface.cancel();
+                public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                    paramDialogInterface.cancel();
                 }
             }).setPositiveButton("ок", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface param1DialogInterface, int param1Int) {
+                public void onClick(DialogInterface paramDialogInterface, int paramInt) {
                     dbSQL.deleteTableWord(acm2.id);
                     getSupportLoaderManager().getLoader(0).forceLoad();
                 }
@@ -217,6 +223,7 @@ public class Ivkwordactivity extends AppCompatActivity implements LoaderManager.
     }
 
     protected void onCreate(Bundle paramBundle) {
+        //Вызов xml файла и связанных с ним объектов, а также объявление используемых переменных
         super.onCreate(paramBundle);
         setContentView(R.layout.ivkactivity_wordactivity);
         mFab = findViewById(R.id.mWordActivityFab);
@@ -228,6 +235,7 @@ public class Ivkwordactivity extends AppCompatActivity implements LoaderManager.
         sp = PreferenceManager.getDefaultSharedPreferences(this);
         trans = sp.getBoolean("trans", false);
         Cursor cursor = dbSQL.getFullTableWithLangAndTrans(num_in);
+        //Вывод на экран данных в зависимости от настроек функции транскрипции
         if (trans == false) {
             String[] arrayOfString = new String[2];
             arrayOfString[0] = "mFirst_word";
@@ -251,33 +259,35 @@ public class Ivkwordactivity extends AppCompatActivity implements LoaderManager.
         registerForContextMenu(mListViewWord);
         getSupportLoaderManager().initLoader(0, null, this);
         back.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View param1View) {
+            public void onClick(View paramView) {
                 Intent intent = new Intent(Ivkwordactivity.this, IvkMainActivity.class);
                 startActivity(intent);
             }
         });
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View param1View) {
+            public void onClick(View paramView) {
+                //Добавление новых слов в зависимости от того, включена ли фунция транскрипции
                 if (trans == false) {
+                    //Если функция транскрипции выключена, то добавляется слово и его перевод, транскрипция указывается как ""
                     View view = LayoutInflater.from(Ivkwordactivity.this.mDialogContext).inflate(R.layout.ivkdialog, null);
                     AlertDialog.Builder builder = new AlertDialog.Builder(Ivkwordactivity.this.mDialogContext);
                     builder.setView(view);
                     final EditText mFirstWordEditText = view.findViewById(R.id.mDialogFirstWord);
                     final EditText mSecondWordEditText = view.findViewById(R.id.mDialogSecondWord);
                     builder.setCancelable(true).setNegativeButton("отмена", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface param2DialogInterface, int param2Int) {
-                            param2DialogInterface.cancel();
+                        public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                            paramDialogInterface.cancel();
                         }
                     }).setPositiveButton("ок", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface param2DialogInterface, int param2Int) {
+                        public void onClick(DialogInterface paramDialogInterface, int paramInt) {
                         }
                     });
                     final AlertDialog alertDialog = builder.create();
                     alertDialog.show();
                     Button button = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
                     View.OnClickListener onClickListener = new View.OnClickListener() {
-                        public void onClick(View param2View) {
+                        public void onClick(View paramView) {
                             mFirstWord_in = mFirstWordEditText.getText().toString();
                             mSecondWord_in = mSecondWordEditText.getText().toString();
                             if (!mFirstWord_in.equals("")) {
@@ -305,6 +315,7 @@ public class Ivkwordactivity extends AppCompatActivity implements LoaderManager.
                     };
                     button.setOnClickListener(onClickListener);
                 } else {
+                    //Добавление слова, перевода и транскрипции
                     View view = LayoutInflater.from(Ivkwordactivity.this.mDialogContext).inflate(R.layout.ivkdialogtrans, null);
                     AlertDialog.Builder builder = new AlertDialog.Builder(Ivkwordactivity.this.mDialogContext);
                     builder.setView(view);
@@ -312,18 +323,18 @@ public class Ivkwordactivity extends AppCompatActivity implements LoaderManager.
                     final EditText mSecondWordEditText = view.findViewById(R.id.mDialogSecondWordTrans);
                     final EditText mTrans = view.findViewById(R.id.trans);
                     builder.setCancelable(true).setNegativeButton("отмена", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface param2DialogInterface, int param2Int) {
-                            param2DialogInterface.cancel();
+                        public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                            paramDialogInterface.cancel();
                         }
                     }).setPositiveButton("ок", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface param2DialogInterface, int param2Int) {
+                        public void onClick(DialogInterface paramDialogInterface, int paramInt) {
                         }
                     });
                     final AlertDialog alertDialog = builder.create();
                     alertDialog.show();
                     Button button = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
                     View.OnClickListener onClickListener = new View.OnClickListener() {
-                        public void onClick(View param2View) {
+                        public void onClick(View paramView) {
                             mFirstWord_in = mFirstWordEditText.getText().toString();
                             mSecondWord_in = mSecondWordEditText.getText().toString();
                             transkript = mTrans.getText().toString();
@@ -355,14 +366,16 @@ public class Ivkwordactivity extends AppCompatActivity implements LoaderManager.
             }
         });
         this.mListViewWord.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> param1AdapterView, View param1View, int param1Int, long param1Long) {
+            public void onItemClick(AdapterView<?> paramAdapterView, View paramView, int paramInt, long paramLong) {
+                //Редактирование слова при быстром нажатии
                 if (trans == false) {
+                    //Без транскрипции
                     View view = LayoutInflater.from(mDialogMain).inflate(R.layout.ivkdialog, null);
                     AlertDialog.Builder builder = new AlertDialog.Builder(Ivkwordactivity.this.mDialogMain);
                     builder.setView(view);
                     final EditText mFirstWordEditText = view.findViewById(R.id.mDialogFirstWord);
                     final EditText mSecondWordEditText = view.findViewById(R.id.mDialogSecondWord);
-                    Cursor cursor = Ivkwordactivity.this.dbSQL.getTableWitfTrans(param1Long);
+                    Cursor cursor = Ivkwordactivity.this.dbSQL.getTableWitfTrans(paramLong);
                     if (cursor != null) {
                         cursor.moveToFirst();
                         Ivkwordactivity.this.sql_id = cursor.getInt(0);
@@ -373,18 +386,18 @@ public class Ivkwordactivity extends AppCompatActivity implements LoaderManager.
                         mSecondWordEditText.setText(Ivkwordactivity.mSecondWord_in.trim());
                     }
                     builder.setCancelable(true).setNegativeButton("отмена", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface param2DialogInterface, int param2Int) {
-                            param2DialogInterface.cancel();
+                        public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                            paramDialogInterface.cancel();
                         }
                     }).setPositiveButton("ок", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface param2DialogInterface, int param2Int) {
+                        public void onClick(DialogInterface paramDialogInterface, int paramInt) {
                         }
                     });
                     final AlertDialog alertDialog = builder.create();
                     alertDialog.show();
                     Button button = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
                     View.OnClickListener onClickListener = new View.OnClickListener() {
-                        public void onClick(View param2View) {
+                        public void onClick(View paramView) {
                             Ivkwordactivity.mFirstWord_in = mFirstWordEditText.getText().toString();
                             Ivkwordactivity.mSecondWord_in = mSecondWordEditText.getText().toString();
                             if (!Ivkwordactivity.mFirstWord_in.equals("")) {
@@ -409,13 +422,14 @@ public class Ivkwordactivity extends AppCompatActivity implements LoaderManager.
                     };
                     button.setOnClickListener(onClickListener);
                 } else {
+                    //С транскрипцией
                     View view = LayoutInflater.from(mDialogMain).inflate(R.layout.ivkdialogtrans, null);
                     AlertDialog.Builder builder = new AlertDialog.Builder(Ivkwordactivity.this.mDialogMain);
                     builder.setView(view);
                     final EditText mFirstWordEditText = view.findViewById(R.id.mDialogFirstWordTrans);
                     final EditText mSecondWordEditText = view.findViewById(R.id.mDialogSecondWordTrans);
                     final EditText mTrans = view.findViewById(R.id.trans);
-                    Cursor cursor = Ivkwordactivity.this.dbSQL.getTableWitfTrans(param1Long);
+                    Cursor cursor = Ivkwordactivity.this.dbSQL.getTableWitfTrans(paramLong);
                     if (cursor != null) {
                         cursor.moveToFirst();
                         Ivkwordactivity.this.sql_id = cursor.getInt(0);
@@ -427,18 +441,18 @@ public class Ivkwordactivity extends AppCompatActivity implements LoaderManager.
                         mTrans.setText(Ivkwordactivity.transkript.trim());
                     }
                     builder.setCancelable(true).setNegativeButton("отмена", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface param2DialogInterface, int param2Int) {
-                            param2DialogInterface.cancel();
+                        public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                            paramDialogInterface.cancel();
                         }
                     }).setPositiveButton("ок", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface param2DialogInterface, int param2Int) {
+                        public void onClick(DialogInterface paramDialogInterface, int paramInt) {
                         }
                     });
                     final AlertDialog alertDialog = builder.create();
                     alertDialog.show();
                     Button button = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
                     View.OnClickListener onClickListener = new View.OnClickListener() {
-                        public void onClick(View param2View) {
+                        public void onClick(View paramView) {
                             Ivkwordactivity.mFirstWord_in = mFirstWordEditText.getText().toString();
                             Ivkwordactivity.mSecondWord_in = mSecondWordEditText.getText().toString();
                             Ivkwordactivity.transkript = mTrans.getText().toString();
@@ -467,7 +481,8 @@ public class Ivkwordactivity extends AppCompatActivity implements LoaderManager.
             }
         });
         this.mFabSA.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View param1View) {
+            public void onClick(View paramView) {
+                //Функции кнопки тестирования
                 Cursor cursor = Ivkwordactivity.this.dbSQL.getFullTableWithLangAndTrans(Ivkwordactivity.num_in);
                 test = cursor.getCount();
                 mNumberOfWordString = Ivkwordactivity.sp.getString("numberofwordCod", "");
@@ -475,8 +490,11 @@ public class Ivkwordactivity extends AppCompatActivity implements LoaderManager.
                     mNumberOfWord = Integer.parseInt(mNumberOfWordString);
                 } catch (NumberFormatException numberFormatException) {
                 }
+                //Получение настроек таймера
                 timerboolean = Boolean.valueOf(sp.getBoolean("timeron", false));
+
                 if (timerboolean.booleanValue() == true) {
+                    //Если таймер выключен, запускается без учёта настроек его времени
                     timercheckstring = Ivkwordactivity.sp.getString("timerset", "");
                     try {
                         Ivkwordactivity.this.timercheck = Integer.parseInt(Ivkwordactivity.this.timercheckstring);
@@ -484,30 +502,35 @@ public class Ivkwordactivity extends AppCompatActivity implements LoaderManager.
                     }
                 }
                 if (Ivkwordactivity.this.mNumberOfWord == 0) {
+                    //Проверка, наличия слов в базе данных
                     Toast.makeText(Ivkwordactivity.this.getApplicationContext(), "Количество слов не может быть 0", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (Ivkwordactivity.this.mNumberOfWord > Ivkwordactivity.this.test)
+                //Проверка, что количество слов не меньше указанного для тестирования
                     Toast.makeText(Ivkwordactivity.this.getApplicationContext(), "Общее количество слов не может быть меньше заданного количества слов", Toast.LENGTH_SHORT).show();
                 if (Ivkwordactivity.this.mNumberOfWord <= Ivkwordactivity.this.test) {
                     if (timerboolean.booleanValue() == true) {
+                        //Если таймер включен, проверяется корректность настроек его времени
                         if (timercheck != 0) {
                             Intent intent1 = new Intent(Ivkwordactivity.this, Ivksecondactivity.class);
                             intent1.putExtra("num_in", Ivkwordactivity.num_in);
                             Ivkwordactivity.this.startActivity(intent1);
                             return;
                         }
+                        //Если время в таймере указано 0, то выдаётся сообщение
                         Toast.makeText(Ivkwordactivity.this.getApplicationContext(), "Таймер не может быть 0", Toast.LENGTH_SHORT).show();
                         return;
                     }
                     Intent intent = new Intent(Ivkwordactivity.this, Ivksecondactivity.class);
                     intent.putExtra("num_in", Ivkwordactivity.num_in);
+                    //Переход в тестирование
                     Ivkwordactivity.this.startActivity(intent);
                 }
             }
         });
     }
-
+    //Создание меню, вызываемого при долгом нажатии
     public void onCreateContextMenu(ContextMenu paramContextMenu, View paramView, ContextMenu.ContextMenuInfo paramContextMenuInfo) {
         super.onCreateContextMenu(paramContextMenu, paramView, paramContextMenuInfo);
         paramContextMenu.add(1, 2, 1, "Удалить");
@@ -518,7 +541,7 @@ public class Ivkwordactivity extends AppCompatActivity implements LoaderManager.
     public Loader<Cursor> onCreateLoader(int paramInt, @Nullable Bundle paramBundle) {
         return new MyCursorLoader(this, dbSQL);
     }
-
+    //Вызов контекстного меню
     public boolean onCreateOptionsMenu(Menu paramMenu) {
         getMenuInflater().inflate(R.menu.ivkmenu_main, paramMenu);
         return true;
@@ -537,6 +560,7 @@ public class Ivkwordactivity extends AppCompatActivity implements LoaderManager.
     }
 
     public boolean onOptionsItemSelected(MenuItem paramMenuItem) {
+        //Действия при нажатия на пункты меню
         int i = paramMenuItem.getItemId();
         if (i != R.id.info_open) {
             if (i != R.id.ivk_open) {
@@ -554,6 +578,7 @@ public class Ivkwordactivity extends AppCompatActivity implements LoaderManager.
 
     public void onResume() {
         super.onResume();
+        //Обновление и вывод слов, при возвращении во вкладку и\или её обновления
         sp = PreferenceManager.getDefaultSharedPreferences(this);
         Cursor cursor = dbSQL.getFullTableWithLangAndTrans(num_in);
         trans = Boolean.valueOf(sp.getBoolean("trans", false));
@@ -585,9 +610,9 @@ public class Ivkwordactivity extends AppCompatActivity implements LoaderManager.
     static class MyCursorLoader extends CursorLoader {
         IvkSql db;
 
-        public MyCursorLoader(Context param1Context, IvkSql param1IvkSql) {
-            super(param1Context);
-            this.db = param1IvkSql;
+        public MyCursorLoader(Context paramContext, IvkSql paramIvkSql) {
+            super(paramContext);
+            this.db = paramIvkSql;
         }
 
         public Cursor loadInBackground() {

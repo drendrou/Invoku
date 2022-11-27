@@ -1,5 +1,5 @@
 package com.example.invoku;
-
+//Файл настроек
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 

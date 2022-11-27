@@ -1,5 +1,5 @@
 package com.example.invoku;
-
+//Вкладка с резульатами тестирования
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -31,20 +31,13 @@ public class ivkresult extends AppCompatActivity implements LoaderManager.Loader
 
     SimpleCursorAdapter mSCA;
 
-    public String[] massiv;
-
-    public boolean[] massivwrong;
-
-    TextView outputwrite;
-
-    TextView outputwrong;
-
     public String write;
 
     public String wrong;
 
     protected void onCreate(Bundle paramBundle) {
         super.onCreate(paramBundle);
+        //Вызов xml файла и связанных с ним объектов, вызов базы данных с данными тестирования, объявление переменных
         setContentView(R.layout.ivkresult);
         mFabGoWord = findViewById(R.id.floatingActionButtonBack);
         write = getIntent().getStringExtra("write");
@@ -61,6 +54,7 @@ public class ivkresult extends AppCompatActivity implements LoaderManager.Loader
         arrayOfString[2] = "mUserInput";
 
         arrayOfString[3] = "mUserResult";
+        //Вывод результатов тестирования. Выводится слово, проверяка его перевода и написания, введенное пользователем и ответ: правильно/неправильно
         int[] arrayOfInt = {R.id.outputresultfirst, R.id.outputresultsecond, R.id.outputresultthird, R.id.outputresultfour};
         SimpleCursorAdapter simpleCursorAdapter = new SimpleCursorAdapter(this, R.layout.ivkresultoutput, cursor, arrayOfString, arrayOfInt, 0);
         this.mSCA = simpleCursorAdapter;
@@ -69,7 +63,7 @@ public class ivkresult extends AppCompatActivity implements LoaderManager.Loader
         registerForContextMenu(this.mListViewWord);
         getSupportLoaderManager().initLoader(0, null, this);
         this.mFabGoWord.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View param1View) {
+            public void onClick(View paramView) {
                 Intent intent = new Intent(ivkresult.this, Ivkwordactivity.class);
                 intent.putExtra("wordlanguage", ivkresult.num_in);
                 ivkresult.this.startActivity(intent);
@@ -97,9 +91,9 @@ public class ivkresult extends AppCompatActivity implements LoaderManager.Loader
     static class MyCursorLoader extends CursorLoader {
         ivkSqlResult db;
 
-        public MyCursorLoader(Context param1Context, ivkSqlResult param1ivkSqlResult) {
-            super(param1Context);
-            this.db = param1ivkSqlResult;
+        public MyCursorLoader(Context paramContext, ivkSqlResult paramivkSqlResult) {
+            super(paramContext);
+            this.db = paramivkSqlResult;
         }
 
         public Cursor loadInBackground() {

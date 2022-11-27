@@ -1,5 +1,5 @@
 package com.example.invoku;
-
+//База данных для тестирования
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -26,24 +26,27 @@ public class ivkSqlResult extends SQLiteOpenHelper {
   public static final String USERS_RESULT = "mUserResult";
   
   public ivkSqlResult(Context paramContext) { super(paramContext, DATABASE_NAME, null, DATABASE_VERSION); }
-  
-  private ContentValues createContentValues(String paramString1, String paramString2, String paramString3, String paramString4) {
+
+  private ContentValues createContentValues(String paramFW, String paramSW, String paramUI, String paramRes) {
+    //Функция добавления в БД слов, введенного пользователем и результата
     ContentValues contentValues = new ContentValues();
-    contentValues.put(FIRST_WORD, paramString1);
-    contentValues.put(SECOND_WORD, paramString2);
-    contentValues.put(USERS_INPUT, paramString3);
-    contentValues.put(USERS_RESULT, paramString4);
+    contentValues.put(FIRST_WORD, paramFW);
+    contentValues.put(SECOND_WORD, paramSW);
+    contentValues.put(USERS_INPUT, paramUI);
+    contentValues.put(USERS_RESULT, paramRes);
     return contentValues;
   }
   
-  public long createNewTable(String paramString1, String paramString2, String paramString3, String paramString4) {
+  public long createNewTable(String paramFW, String paramSW, String paramUI, String paramRes) {
+    //Добавление в БД слов, введенного пользователем и результата
     SQLiteDatabase sQLiteDatabase = getWritableDatabase();
-    long l = sQLiteDatabase.insert(DATABASE_TABLE, null, createContentValues(paramString1, paramString2, paramString3, paramString4));
+    long l = sQLiteDatabase.insert(DATABASE_TABLE, null, createContentValues(paramFW, paramSW, paramUI, paramRes));
     sQLiteDatabase.close();
     return l;
   }
   
   public void deleteTable() {
+    //Удаление БД результата. Не влияет на основную БД слов
     SQLiteDatabase sQLiteDatabase = getWritableDatabase();
     sQLiteDatabase.delete(DATABASE_TABLE, COLUMN_ID, null);
     sQLiteDatabase.close();

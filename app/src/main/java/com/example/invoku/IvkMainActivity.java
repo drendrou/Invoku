@@ -1,5 +1,7 @@
 package com.example.invoku;
 
+//Основная вкладка с добавлением, выбором, редактированием и удалением изучаемых языков
+
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -56,18 +58,21 @@ public class IvkMainActivity extends AppCompatActivity implements LoaderManager.
     String wordlanguage;
 
     @Override
+
+    //Меню вызываемое при долгом нажатии на один из языков
     public boolean onContextItemSelected(MenuItem paramMenuItem) {
+        //Полное удаление языка из базы данных. Без возможности восстановления, посколько очищается связанная с ним память. Слова связанные с ним тоже удаляются
         if (paramMenuItem.getItemId() == deleteMain) {
             final AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) paramMenuItem.getMenuInfo();
             View view = LayoutInflater.from(mDialogMain).inflate(R.layout.ivkdelete, null);
             AlertDialog.Builder builder = new AlertDialog.Builder(mDialogMain);
             builder.setView(view);
             builder.setCancelable(true).setNegativeButton("отмена", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface param1DialogInterface, int param1Int) {
-                    param1DialogInterface.cancel();
+                public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                    paramDialogInterface.cancel();
                 }
             }).setPositiveButton("ок", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface param1DialogInterface, int param1Int) {
+                public void onClick(DialogInterface paramDialogInterface, int paramInt) {
                     dbSQLM.deleteTable(acmi.id);
                     IvkSqlDelete.deleteTable(acmi.id);
                     getSupportLoaderManager().getLoader(0).forceLoad();
@@ -75,7 +80,7 @@ public class IvkMainActivity extends AppCompatActivity implements LoaderManager.
             });
             builder.create().show();
         }
-
+        //Изменение названия. Не влияет на хранимые данные
         if (paramMenuItem.getItemId() == changeMain) {
             final AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) paramMenuItem.getMenuInfo();
             View view = LayoutInflater.from(mDialogMain).inflate(R.layout.ivkdialogmain, null);
@@ -91,18 +96,18 @@ public class IvkMainActivity extends AppCompatActivity implements LoaderManager.
                 LanguageNameEditText.setSelection(LanguageNameEditText.getText().length());
             }
             builder.setCancelable(true).setNegativeButton("отмена", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface param1DialogInterface, int param1Int) {
-                    param1DialogInterface.cancel();
+                public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                    paramDialogInterface.cancel();
                 }
             }).setPositiveButton("ок", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface param1DialogInterface, int param1Int) {
+                public void onClick(DialogInterface paramDialogInterface, int paramInt) {
                 }
             });
             final AlertDialog alertDialog = builder.create();
             alertDialog.show();
             alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View param1View) {
+                public void onClick(View paramView) {
                     languagename_in = LanguageNameEditText.getText().toString();
                     if (!languagename_in.equals("")) {
                         dbSQLM.updateTable(num_id, languagename_in.trim());
@@ -119,6 +124,7 @@ public class IvkMainActivity extends AppCompatActivity implements LoaderManager.
             return true;
 
         }
+        //Просто открытие, как и при быстром нажатии
         if (paramMenuItem.getItemId() == open) {
             final AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) paramMenuItem.getMenuInfo();
             Cursor cursor = dbSQLM.getTable(acmi.id);
@@ -138,6 +144,7 @@ public class IvkMainActivity extends AppCompatActivity implements LoaderManager.
     @Override
     protected void onCreate(Bundle paramBundle) {
         super.onCreate(paramBundle);
+        //Вызов xml файла и связанных с ним объектов, а также объявление используемых переменных
         setContentView(R.layout.ivkactivitymain);
         mFBAM = findViewById(R.id.floatingActionButtonMain);
         mListViewMain = findViewById(R.id.ListViewLanguage);
@@ -153,18 +160,19 @@ public class IvkMainActivity extends AppCompatActivity implements LoaderManager.
         mListViewMain.setAdapter(this.mSCAM);
         registerForContextMenu(this.mListViewMain);
         getSupportLoaderManager().initLoader(0, null, this);
+        //Функция добавления новых языков, вызываемая при нажатии на кнопку
         mFBAM.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View param1View) {
+            public void onClick(View paramView) {
                 View view = LayoutInflater.from(mDialogMain).inflate(R.layout.ivkdialogmain, null);
                 AlertDialog.Builder builder = new AlertDialog.Builder(IvkMainActivity.this.mDialogMain);
                 builder.setView(view);
                 LanguageNameEditText = view.findViewById(R.id.language_name);
                 builder.setCancelable(true).setNegativeButton("отмена", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface param2DialogInterface, int param2Int) {
-                        param2DialogInterface.cancel();
+                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                        paramDialogInterface.cancel();
                     }
                 }).setPositiveButton("ок", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface param2DialogInterface, int param2Int) {
+                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
                     }
                 });
                 final AlertDialog alertDialog = builder.create();
@@ -173,6 +181,7 @@ public class IvkMainActivity extends AppCompatActivity implements LoaderManager.
                     @Override
                     public void onClick(View v) {
                         languagename_in = LanguageNameEditText.getText().toString();
+                        //Если название языка пустое, просит ввести название
                         if (languagename_in.equals("")) {
                             Toast toast = Toast.makeText(getApplicationContext(),
                                     "Введите название языка", Toast.LENGTH_SHORT);
@@ -184,7 +193,7 @@ public class IvkMainActivity extends AppCompatActivity implements LoaderManager.
 
                             toast.show();
                         }
-
+                        //Создание новой таблицы для добавленного языка
                         if (!languagename_in.equals("")) {
                             dbSQLM.createNewTable(languagename_in.trim());
 
@@ -197,8 +206,9 @@ public class IvkMainActivity extends AppCompatActivity implements LoaderManager.
         });
         mListViewMain.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> param1AdapterView, View param1View, int param1Int, long param1Long) {
-                Cursor cursor = dbSQLM.getTable(param1Long);
+            //Переход во вкладку со словами для выбранного языка
+            public void onItemClick(AdapterView<?> paramAdapterView, View paramView, int paramInt, long paramLong) {
+                Cursor cursor = dbSQLM.getTable(paramLong);
                 if (cursor != null) {
                     cursor.moveToFirst();
                     num_id = cursor.getInt(0);
@@ -210,7 +220,7 @@ public class IvkMainActivity extends AppCompatActivity implements LoaderManager.
             }
         });
     }
-
+    //Создание меню, вызываемого при долгом нажатии
     public void onCreateContextMenu(ContextMenu paramContextMenu, View paramView, ContextMenu.ContextMenuInfo paramContextMenuInfo) {
         super.onCreateContextMenu(paramContextMenu, paramView, paramContextMenuInfo);
         paramContextMenu.add(1, changeMain, 1, R.string.change_record);
@@ -226,6 +236,7 @@ public class IvkMainActivity extends AppCompatActivity implements LoaderManager.
     }
 
     @Override
+    //Вызов контекстного меню
     public boolean onCreateOptionsMenu(Menu paramMenu) {
         getMenuInflater().inflate(R.menu.ivkmenu_main, paramMenu);
         return true;
@@ -247,6 +258,7 @@ public class IvkMainActivity extends AppCompatActivity implements LoaderManager.
     }
 
     @Override
+    //Действия при нажатия на пункты меню
     public boolean onOptionsItemSelected(MenuItem paramMenuItem) {
         int i = paramMenuItem.getItemId();
         if (i != R.id.info_open) {
@@ -276,9 +288,9 @@ public class IvkMainActivity extends AppCompatActivity implements LoaderManager.
     static class MyCursorLoader extends CursorLoader {
         IvkSqlMain db;
 
-        public MyCursorLoader(Context param1Context, IvkSqlMain param1IvkSqlMain) {
-            super(param1Context);
-            db = param1IvkSqlMain;
+        public MyCursorLoader(Context paramContext, IvkSqlMain paramIvkSqlMain) {
+            super(paramContext);
+            db = paramIvkSqlMain;
         }
 
         public Cursor loadInBackground() {

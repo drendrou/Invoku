@@ -1,5 +1,5 @@
 package com.example.invoku;
-
+//Тестирование
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -15,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 
 public class Ivksecondactivity extends AppCompatActivity {
+
+    //Вызов xml файла, объявление переменных
     public static String ostalos = "Осталось: ";
 
     public static String writestring;
@@ -67,6 +69,7 @@ public class Ivksecondactivity extends AppCompatActivity {
 
     protected void onCreate(Bundle paramBundle) {
         super.onCreate(paramBundle);
+        //Объявление xml объектов и присвоение им данных
         setContentView(R.layout.ivkactivity_secondactivity);
         this.mTestFirstWord = (TextView) findViewById(R.id.mSecondActivityFirstWord);
         this.mTestSecondWord = (EditText) findViewById(R.id.mSecondActivitySecondWord);
@@ -83,13 +86,17 @@ public class Ivksecondactivity extends AppCompatActivity {
         this.num_in = Integer.valueOf(newTable.getInt(0));
         this.mFirstWord_in = newTable.getString(1);
         this.mSecondWord_in = newTable.getString(2);
+        //Вывод на экран слова или его перевода в зависимости от того, включена ли пользователем функция инвентирования тестирования
         if (!this.checkinvent.booleanValue()) {
             this.mTestFirstWord.setText(this.mFirstWord_in);
         } else {
             this.mTestFirstWord.setText(this.mSecondWord_in);
         }
         this.result.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View param1View) {
+            public void onClick(View paramView) {
+                //Действия при нажатии на кнопку. В зависимости от того, соответствует ли введенное пользователем правильному переводу и написанию,
+                //данные будут сохранены как "верные" и "неверные". Написанное пользователем также сохраняется
+
                 if (!Ivksecondactivity.this.checkinvent.booleanValue()) {
                     Ivksecondactivity.this.mTestSeconwWordString = Ivksecondactivity.this.mTestSecondWord.getText().toString();
                     if (Ivksecondactivity.this.n < 1 + Ivksecondactivity.this.mNumberOfWord) {
@@ -164,11 +171,13 @@ public class Ivksecondactivity extends AppCompatActivity {
                 }
             }
         });
+        //Объявление таймера
         this.checksorting = Boolean.valueOf(this.sp.getBoolean("timeron", false));
         if (!this.checksorting.booleanValue()) {
             this.timerText.setText("");
             return;
         }
+        //Получение длительности таймера из настроек
         this.timercheck = this.sp.getString("timerset", "");
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(this.timercheck);
@@ -181,6 +190,7 @@ public class Ivksecondactivity extends AppCompatActivity {
         CountDownTimer countDownTimer1 = new CountDownTimer((1000 + this.timer), 1000L) {
             public void onFinish() {
                 if (!Ivksecondactivity.this.checkinvent.booleanValue()) {
+                    //Действия при окончании таймера. Полностью соответствуют нажатию кнопке. Если пользователь успел ввести ответ, то он также корректно сохраняется
                     Ivksecondactivity.this.mTestSeconwWordString = Ivksecondactivity.this.mTestSecondWord.getText().toString();
                     if (Ivksecondactivity.this.n < 1 + Ivksecondactivity.this.mNumberOfWord) {
                         if (Ivksecondactivity.this.mTestSeconwWordString.trim().equalsIgnoreCase(Ivksecondactivity.this.mSecondWord_in)) {
@@ -254,12 +264,13 @@ public class Ivksecondactivity extends AppCompatActivity {
                 }
             }
 
-            public void onTick(long param1Long) {
+            public void onTick(long paramLong) {
+                //Вывод работы таймера
                 if (Ivksecondactivity.this.n <= Ivksecondactivity.this.mNumberOfWord) {
                     TextView textView = Ivksecondactivity.this.timerText;
                     StringBuilder stringBuilder = new StringBuilder();
                     stringBuilder.append(Ivksecondactivity.ostalos);
-                    stringBuilder.append(param1Long / 1000L);
+                    stringBuilder.append(paramLong / 1000L);
                     textView.setText(stringBuilder.toString());
                 }
             }
